@@ -1,3 +1,7 @@
+"scripts": {
+  "start": "next start -H 0.0.0.0 -p $PORT", 
+  "dev-render": "vite --host 0.0.0.0 --port $PORT" 
+}
 {
   "name": "shuvro-telecom-inventory",
   "private": true,
