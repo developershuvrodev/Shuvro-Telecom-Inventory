@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F4F6FA;
+  --bg-soft: #EAEEF5;
+  --surface: rgba(255,255,255,0.72);
+  --surface-solid: #FFFFFF;
+  --border: rgba(15,23,42,0.08);
+  --text: #101826;
+  --text-dim: #5B6472;
+  --text-faint: #8A93A3;
+  --accent: #0F9E93;
+  --accent-ink: #08544D;
+  --accent-soft: rgba(15,158,147,0.12);
+  --amber: #E08A2C;
+  --amber-soft: rgba(224,138,44,0.14);
+  --danger: #E14B4B;
+  --danger-soft: rgba(225,75,75,0.12);
+  --blue: #3E6DF0;
+  --blue-soft: rgba(62,109,240,0.12);
+}
+
+.dark {
+  --bg: #0B0F17;
+  --bg-soft: #10141F;
+  --surface: rgba(22,27,38,0.68);
+  --surface-solid: #151A25;
+  --border: rgba(255,255,255,0.08);
+  --text: #EDEFF4;
+  --text-dim: #9AA3B2;
+  --text-faint: #6B7383;
+  --accent: #23C9BA;
+  --accent-ink: #A8F3EA;
+  --accent-soft: rgba(35,201,186,0.14);
+  --amber: #F0A94E;
+  --amber-soft: rgba(240,169,78,0.14);
+  --danger: #F17272;
+  --danger-soft: rgba(241,114,114,0.14);
+  --blue: #6C8DF7;
+  --blue-soft: rgba(108,141,247,0.14);
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background .35s ease, color .35s ease;
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  ::selection { background: var(--accent-soft); color: var(--accent-ink); }
+}
+
+@layer components {
+  .num { font-family: 'Inter', 'Hind Siliguri', sans-serif; font-variant-numeric: tabular-nums; }
+
+  .glass {
+    background: var(--surface);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    @apply border border-border;
+  }
+  .card { @apply bg-surface-solid border border-border rounded-2xl2 shadow-sm2; }
+  .card-hover { @apply transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md2; }
+
+  .btn { @apply inline-flex items-center gap-2 font-semibold text-sm rounded-xl px-4 py-2.5 transition-all select-none whitespace-nowrap active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-accent text-white shadow-lg shadow-accent-soft hover:brightness-105; }
+  .btn-ghost { @apply btn bg-transparent text-text-dim border border-border hover:bg-bg-soft hover:text-text; }
+  .btn-soft { @apply btn bg-accent-soft text-accent-ink hover:brightness-105; }
+  .btn-danger { @apply btn bg-danger-soft text-danger hover:bg-danger hover:text-white; }
+
+  .input { @apply w-full bg-bg-soft border-[1.5px] border-border text-text rounded-xl px-3 py-2.5 text-sm outline-none transition-all placeholder:text-text-faint focus:border-accent focus:bg-surface-solid focus:ring-4 focus:ring-accent-soft; }
+  .input-err { @apply !border-danger focus:!ring-danger-soft; }
+  .label { @apply text-[12.5px] font-semibold text-text-dim mb-1.5 block; }
+
+  .sidebar-item { @apply flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-text-dim cursor-pointer transition-all mb-0.5 hover:bg-bg-soft hover:text-text; }
+  .sidebar-item.active { @apply bg-accent-soft text-accent-ink; }
+
+  .tag { @apply inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full; }
+
+  table.data-table { @apply border-separate w-full; border-spacing: 0; }
+  table.data-table th { @apply text-left text-[11.5px] font-bold text-text-faint uppercase tracking-wide px-3.5 py-2.5 border-b border-border whitespace-nowrap; }
+  table.data-table td { @apply px-3.5 py-3 border-b border-border text-[13.5px] align-middle; }
+  table.data-table tbody tr:last-child td { @apply border-b-0; }
+  table.data-table tbody tr { @apply transition-colors hover:bg-bg-soft; }
+}
+
+.scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+.scrollbar::-webkit-scrollbar-track { background: transparent; }
+.scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+.scrollbar::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+.shimmer { position: relative; overflow: hidden; background: var(--bg-soft); }
+.shimmer::after {
+  content: ''; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  animation: shimmer 1.4s infinite;
+}
+.dark .shimmer::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent); }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+.barcode-strip { display: flex; align-items: flex-end; gap: 2px; height: 26px; }
+.barcode-strip span { display: block; width: 2px; background: currentColor; border-radius: 1px; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; color: #000 !important; margin: 0; }
+}
